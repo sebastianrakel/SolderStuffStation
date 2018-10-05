@@ -1,7 +1,6 @@
 $fn = 100;
 
-small_block_width = 30;
-small_block_length = 30;
+block_side_length = 30;
 
 module connector() {
      linear_extrude(10) {
@@ -9,28 +8,37 @@ module connector() {
      }
 }
 
-module Block(width, length, height, with_right, with_left, with_up, with_down) {
+module Block(width_scale=1, length_scale=1, height=10) {
+     difference() {     
+          cube([width_scale * block_side_length, length_scale * block_side_length, height]);
 
-     difference() {
-          cube([width, length, height]);
-          //nut
-          if(with_down) translate([(width/2) + 2.5, 2, 0]) rotate([0, 0, 180]) connector();
-          if(with_left) translate([2, (length/2) - 2.5, 0]) rotate([0, 0, 90]) connector();
+          // Groove X
+          for(pos = [1:width_scale]) {
+               translate([((pos - 1) * block_side_length) + 17.5, 2, 0]) rotate([0, 0, 180]) connector();
+          }
+
+          // Groove Y
+          for(pos = [1:length_scale]) {
+               translate([2, ((pos - 1) * block_side_length) + 12.5, 0]) rotate([0, 0, 90]) connector();
+          }
+     }
+     
+     // Tounge X
+     for(pos = [1:width_scale]) {
+          translate([((pos - 1) * block_side_length) + 17.5,
+                     block_side_length * length_scale + 2, 0]) rotate([0, 0, 180]) connector();
      }
 
-     //feather
-     if(with_up) translate([(width/2) + 2.5, length + 2, 0]) rotate([0, 0, 180]) connector();
-     if(with_right) translate([width + 2, (length/2) - 2.5, 0]) rotate([0, 0, 90]) connector();
+     // Tounge Y
+     for(pos = [1:length_scale]) {
+          translate([block_side_length * width_scale + 2,
+                     ((pos - 1) * block_side_length) + 12.5, 0]) rotate([0, 0, 90]) connector();
+     }
 }
 
-module SmallBlock(height, with_right=true, with_left=true, with_up=true, with_down=true) {
-     Block(small_block_width, small_block_length, height, with_right, with_left, with_up, with_down);
+module GreatBlock() {
+     Block(2, 2);
 }
 
-module GreatBlock(height) {
-     SmallBlock(height, with_right=false, with_up=false);
-     translate([small_block_width, 0, 0]) SmallBlock(height, with_left=false, with_up=false);
-     translate([small_block_width, small_block_length, 0]) SmallBlock(height, with_left=false, with_down=false);
-     translate([0, small_block_length, 0]) SmallBlock(height, with_down=false, with_right=false);
-}
-
+// GreatBlock(1, 1);
+//Block(3,2);

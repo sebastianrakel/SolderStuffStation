@@ -1,7 +1,7 @@
 include <solder_stuff_station.scad>;
 
-outer_diameter = 50;
-inner_diameter = 44;
+outer_diameter = block_side_length * 3 - 10;
+inner_diameter = block_side_length * 3 - 16;
 
 module globe(diameter, sockel_height=10) {
      hull() {
@@ -18,11 +18,11 @@ module globe(diameter, sockel_height=10) {
 
 difference() {
      union() {
-          GreatBlock(10);
-          translate([small_block_width, small_block_length, 0]) {
+          Block(3, 3, 10);
+          translate([block_side_length * 1.5, block_side_length  * 1.5, 0]) {
                globe(outer_diameter, 10);
           }
      }
-     translate([small_block_width, small_block_length - 3, 3]) globe(inner_diameter, 12);
+     translate([block_side_length * 1.5, block_side_length  * 1.5 - 3, 3]) globe(inner_diameter, 12);
 }
 

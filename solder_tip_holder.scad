@@ -8,11 +8,11 @@ module solderTipConnector() {
 module SolderTipHolder() {
      tip_distance = 8;
      difference() {
-          SmallBlock(20);
+          Block(height=20);
           translate([tip_distance, tip_distance, 3]) solderTipConnector();
-          translate([tip_distance, small_block_length - tip_distance, 3]) solderTipConnector();
-          translate([small_block_width - tip_distance, tip_distance, 3]) solderTipConnector();
-          translate([small_block_width - tip_distance, small_block_length - tip_distance, 3]) solderTipConnector();          
+          translate([tip_distance, block_side_length - tip_distance, 3]) solderTipConnector();
+          translate([block_side_length - tip_distance, tip_distance, 3]) solderTipConnector();
+          translate([block_side_length - tip_distance, block_side_length - tip_distance, 3]) solderTipConnector();          
      }     
 }
 
