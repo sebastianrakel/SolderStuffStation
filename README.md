@@ -21,3 +21,6 @@ You can print all modules and combine it like a puzzle
 
 ## Wool Holder
 ![](images/solder_wool_holder.png)
+
+## Maiskolben Stand
+![](images/solder_maiskolben_stand.png)
