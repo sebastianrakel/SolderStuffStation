@@ -40,5 +40,6 @@ module GreatBlock() {
      Block(2, 2);
 }
 
+function BlockLength(scale=1) = block_side_length * scale;
 // GreatBlock(1, 1);
 //Block(3,2);
